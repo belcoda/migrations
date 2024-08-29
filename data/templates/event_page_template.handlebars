@@ -1,0 +1,95 @@
+<div class="px-8 lg:px-12">
+  <main class="container mx-auto">
+    <section class="flex w-full items-baseline justify-center gap-4 lg:gap-8">
+      <div>
+        <div class="mt-20 prose mb-6">
+          <h1 class="font-extrabold text-6xl text-gray-900">{{event.heading}}</h1>
+        </div>
+        <div class="prose prose-lg mt-4">{{{event.html}}}</div>
+      </div>
+      <div class="w-full md:max-w-sm bg-gray-900 p-4 lg:p6 xl:p-8 text-white grid grid-cols-1">
+        {{#if status.success}}
+        <h2 class="text-xl xl:text-2xl font-bold">Thank you for your registration</h2>
+        <p class="italic text-lg">We look forward to seeing you at the event!</p>
+        {{else}}
+        <h2 class="text-2xl font-bold mb-4">{{event.heading}}</h2>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="font-bold">{{icon "calendar"}}</div>
+          <div class="">{{render_event_time event.starts_at}}</div>
+        </div>
+        {{#if event.online}}
+        <div class="flex items-center gap-2">
+          <div class="font-bold">{{icon "globe"}}</div>
+          <div class="">{{event.online_url}}</div>
+        </div>
+
+        {{else}}
+        <div class="flex items-center gap-2">
+          <div class=" font-bold">{{icon "mappin"}}</div>
+          <div class="">
+            <div>{{address event}} <span class="text-sm">[<a href="{{google_maps_url event}}" target="_blank">Google
+                  Maps</a>]</span></div>
+          </div>
+        </div>
+
+        {{/if}}
+
+        {{#if status.error}}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-6" role="alert">
+          {{status.error}}
+        </div>
+        {{/if}}
+        <form method="post" class="space-y-4 mt-6">
+          <div>
+            <div class="mb-1 text-xs uppercase tracking-wider">Name</div>
+            <div><input {{#if event.require_name}} required {{/if}} type='text' name="full_name"
+                class="block w-full placeholder-gray-500 px-2 py-1 text-md border-2 border-white text-gray-700 rounded">
+            </div>
+          </div>
+          {{#if event.ask_email}}<div>
+            <div class="mb-1 text-xs uppercase tracking-wider">Email</div>
+            <div><input {{#if event.require_email}} required {{/if}} type='email' name="email"
+                class="block w-full placeholder-gray-500 px-2 py-1 text-md border-2 border-white text-gray-700 rounded">
+            </div>
+          </div>
+          {{/if}}
+          {{#if event.ask_phone_number}}<div>
+            <div class="mb-1 text-xs uppercase tracking-wider">Phone number</div>
+            <div><input {{#if event.require_phone_number}} required {{/if}} type='text' name="phone_number"
+                class="block w-full placeholder-gray-500 px-2 py-1 text-md border-2 border-white text-gray-700 rounded">
+            </div>
+          </div>
+          {{/if}}
+          {{#if event.ask_postcode}}<div>
+            <div class="mb-1 text-xs uppercase tracking-wider">Postcode</div>
+            <div><input {{#if event.require_postcode}} required {{/if}} type='text' name="postcode"
+                class="block w-full placeholder-gray-500 px-2 py-1 text-md border-2 border-white text-gray-700 rounded">
+            </div>
+          </div>
+          {{/if}}
+          {{#if event.ask_address}}<div>
+            <div class="mb-1 text-xs uppercase tracking-wider">Address</div>
+            <div><input {{#if event.require_address}} required {{/if}} type='text' name="address"
+                class="block w-full placeholder-gray-500 px-2 py-1 text-md border-2 border-white text-gray-700 rounded">
+            </div>
+          </div>
+          {{/if}}
+
+
+          <div class="col-span-9 mt-4">
+            <label class="flex items-center">
+              <input type="checkbox" name="opt_in" class="form-checkbox w-5 h-5 rounded text-red-500" checked>
+              <span class="ml-2 text-lg">I want to receive updates about this and other campaigns</span>
+            </label>
+          </div>
+
+          <button role="submit"
+            class="bg-red-500 hover:bg-red-600 text-white font-bold text-lg rounded py-1 px-4 text-center">Register</button>
+        </form>
+        {{/if}}
+      </div>
+    </section>
+
+  </main>
+</div>
+{{> blocks.footer }}
